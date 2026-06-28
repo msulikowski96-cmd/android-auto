@@ -1,20 +1,37 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# World Cup Live Center
 
-# Run and deploy your AI Studio app
+Aplikacja React z dashboardem Mundialu 2026 oraz przykładowym backendem Node/Express, który ukrywa klucz RapidAPI SportAPI7 po stronie serwera.
 
-This contains everything you need to run your app locally.
+## Funkcje
 
-View your app in AI Studio: https://ai.studio/apps/274c19cb-81a8-4177-81b0-5e47448258e6
+- mecze z wybranego dnia z filtrem `uniqueTournament.id === 16`,
+- live wynik, strzelcy, statystyki i składy,
+- tabela grup z punktami, bilansem i formą,
+- analiza AI po polsku na bazie danych meczowych,
+- cache endpointów, żeby ograniczyć zużycie limitów RapidAPI.
 
-## Run Locally
+## Uruchomienie
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+cp .env.example .env
+# uzupełnij RAPIDAPI_KEY w .env
+npm run dev
+```
 
+Backend można uruchomić osobno:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+node server.js
+```
+
+## Endpointy backendu
+
+- `GET /api/worldcup/matches/today`
+- `GET /api/worldcup/matches/date/:date`
+- `GET /api/worldcup/match/:id`
+- `GET /api/worldcup/match/:id/stats`
+- `GET /api/worldcup/match/:id/lineups`
+- `GET /api/worldcup/standings`
+
+Frontend nigdy nie odpytuje RapidAPI bezpośrednio. Klucz `RAPIDAPI_KEY` jest używany tylko w `server.js`.
